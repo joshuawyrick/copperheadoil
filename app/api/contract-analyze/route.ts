@@ -1,0 +1,17 @@
+import { NextResponse } from "next/server";
+
+function fallback(name:string){return {title:name||'Petroleum Agreement',summary:'Preview analysis is running without an OpenAI API key. Add OPENAI_API_KEY in Replit Secrets to enable document-aware AI analysis.',health:78,terms:[{label:'Measurement basis',value:'Review measurement and settlement language'},{label:'Pricing',value:'Identify index, differential and deductions'},{label:'Term',value:'Check renewal and notice windows'},{label:'Audit',value:'Confirm reconciliation and look-back rights'}],attention:['Confirm the controlling quantity and quality measurement methods.','Review termination and automatic renewal timing.','Confirm responsibility for transportation, losses and quality deductions.'],measurement:['Identify the controlling measurement point.','Confirm gravity, temperature, BS&W and sampling procedures.','Review proving, calibration, reconciliation and dispute language.'],questions:['Who controls the measurement used for settlement?','What happens if field and purchaser measurements disagree?','How long does the producer have to audit or dispute settlement?'],mode:'demo'};}
+
+function extractJson(text:string){const clean=text.replace(/```json|```/g,'').trim();const start=clean.indexOf('{');const end=clean.lastIndexOf('}');if(start<0||end<0)return null;try{return JSON.parse(clean.slice(start,end+1))}catch{return null}}
+
+export async function POST(req:Request){
+  const fd=await req.formData();const file=fd.get('file');if(!(file instanceof File)) return NextResponse.json({error:'File required.'},{status:400});if(file.size>20*1024*1024)return NextResponse.json({error:'Maximum file size is 20 MB.'},{status:413});
+  const apiKey=process.env.OPENAI_API_KEY;if(!apiKey)return NextResponse.json(fallback(file.name));
+  try{
+    const bytes=Buffer.from(await file.arrayBuffer());const dataUrl=`data:${file.type||'application/octet-stream'};base64,${bytes.toString('base64')}`;
+    const prompt=`You are Copperhead Contract Intelligence. Review this petroleum-related agreement for an independent producer. This is technical and commercial issue spotting, not legal advice. Focus on measurement, custody transfer, pricing, deductions, quality, BS&W, gravity, sampling, transportation, volume commitments, payment, audit rights, renewal, termination, obligations and questions a producer should ask. Return only valid JSON with this exact shape: {"title":"string","summary":"string","health":number 0-100,"terms":[{"label":"string","value":"string"}],"attention":["string"],"measurement":["string"],"questions":["string"],"mode":"ai"}. Keep each item concise. Do not make legal conclusions.`;
+    const body={model:process.env.OPENAI_MODEL||'gpt-5',input:[{role:'user',content:[{type:'input_text',text:prompt},{type:'input_file',filename:file.name,file_data:dataUrl}]}]};
+    const r=await fetch('https://api.openai.com/v1/responses',{method:'POST',headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json'},body:JSON.stringify(body)});if(!r.ok){const t=await r.text();console.error('OpenAI error',t);return NextResponse.json(fallback(file.name));}
+    const j=await r.json();const text=j.output_text||j.output?.flatMap((x:any)=>x.content||[]).map((x:any)=>x.text||'').join('\n')||'';const parsed=extractJson(text);return NextResponse.json(parsed||fallback(file.name));
+  }catch(e){console.error(e);return NextResponse.json(fallback(file.name));}
+}

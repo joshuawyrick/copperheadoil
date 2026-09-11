@@ -1,0 +1,3 @@
+import ContractIntelligence from "@/components/ContractIntelligence";
+export const metadata={title:"Contract Intelligence"};
+export default function Page(){return <main><section className="section" style={{background:'linear-gradient(160deg,#080c0f,#1b2429)'}}><div className="container"><div className="kicker">Producer Desk</div><h1 className="h1">Do not just read the contract. Understand what it does to the barrel.</h1><p className="lead">Copperhead Contract Intelligence extracts measurement, pricing, quality, logistics, deadlines and commercial attention items so producers can ask better questions before a buried clause becomes expensive.</p><div style={{marginTop:30}}><ContractIntelligence/></div></div></section></main>}

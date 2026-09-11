@@ -1,0 +1,1 @@
+import Link from "next/link";export default function NotFound(){return <main><section className="section"><div className="container"><div className="kicker">404</div><h1 className="h1">This page is not on the lease.</h1><p className="lead">The page you requested could not be found.</p><Link className="btn btn-primary" href="/">Return home</Link></div></section></main>}

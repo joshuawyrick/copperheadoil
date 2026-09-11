@@ -1,0 +1,11 @@
+[
+  {"name":"TradingView","type":"market-widget","coverage":"Energy futures / CFDs","auth":"none for widget","frequency":"provider managed","url":"https://www.tradingview.com/widget/"},
+  {"name":"U.S. EIA","type":"market-data","coverage":"Prices, production, inventories, refining, state data","auth":"free API key","frequency":"source dependent","url":"https://www.eia.gov/opendata/"},
+  {"name":"GDELT Project","type":"news-discovery","coverage":"Global and U.S. industry news","auth":"none","frequency":"frequent","url":"https://www.gdeltproject.org/"},
+  {"name":"Federal Register","type":"regulation","coverage":"Federal rules and notices","auth":"none","frequency":"daily / current","url":"https://www.federalregister.gov/developers/documentation/api/v1"},
+  {"name":"Congress.gov","type":"legislation","coverage":"Federal legislation","auth":"free api.data.gov key","frequency":"current","url":"https://api.congress.gov/"},
+  {"name":"Open States","type":"legislation","coverage":"State legislation","auth":"API key","frequency":"multiple daily when available","url":"https://docs.openstates.org/api-v3/"},
+  {"name":"Crossref","type":"research","coverage":"Research metadata","auth":"none","frequency":"continuous","url":"https://api.crossref.org/"},
+  {"name":"CalGEM","type":"state-regulator","coverage":"California oil and gas operations","auth":"public pages / data","frequency":"source dependent","url":"https://www.conservation.ca.gov/calgem"},
+  {"name":"Texas Railroad Commission","type":"state-regulator","coverage":"Texas oil and gas operations","auth":"public pages / data","frequency":"source dependent","url":"https://www.rrc.texas.gov/"}
+]

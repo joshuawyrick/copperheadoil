@@ -1,0 +1,3 @@
+import OnboardingForm from "@/components/OnboardingForm";
+export const metadata={title:"Producer Onboarding"};
+export default function Page(){return <main className="surface-paper"><section className="section"><div className="container"><div className="kicker">Producer account</div><h1 className="h1" style={{color:'#141a1e'}}>Tell Copperhead about your operation.</h1><p style={{fontSize:'1.12rem',color:'#5e6971',maxWidth:780}}>The more context Copperhead has, the more useful calculations, contract analysis and future operating intelligence can become. Public tools never require an account.</p><div style={{marginTop:28}}><OnboardingForm/></div></div></section></main>}
